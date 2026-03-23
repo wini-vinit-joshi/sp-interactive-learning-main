@@ -38,12 +38,13 @@ export default function Home() {
             </div> */}
           </div>
 
-          <h1 className="text-5xl md:text-[61px] font-bold text-white tracking-tight mb-6 leading-[1.4em]">
+          <h1 className="text-5xl md:text-[50px] font-bold text-white tracking-tight mb-6 leading-[1.4em]">
             Learn Home Inspection. <br className="hidden md:block" />
             <span className="text-[#D4A656]">Practice with AI.</span> Own Your Future.
           </h1>
           <p className="text-xl text-white/80 mb-10 max-w-5xl">
             Master the skills of home inspection through interactive, AI-driven training.
+             <br className="hidden md:block" />
             No Prior Experience Needed.
           </p>
           <div className="flex flex-col sm:flex-row gap-4">

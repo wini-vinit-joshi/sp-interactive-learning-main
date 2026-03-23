@@ -1,16 +1,50 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, UserCircle } from "lucide-react";
+import { Menu, X, UserCircle, LogOut } from "lucide-react";
 import ConsultationModal from "./ConsultationModal";
 import AuthModal from "./AuthModal";
+import { useAuth } from "@/context/AuthContext";
+
+function getInitials(name: string | null | undefined) {
+  if (!name) return "U";
+  const parts = name.trim().split(" ").filter(Boolean);
+  if (parts.length === 1) return parts[0][0].toUpperCase();
+  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+}
+
+function UserAvatar({ photoURL, displayName, size = "w-8 h-8", text = "text-sm" }: { photoURL?: string | null; displayName?: string | null; size?: string; text?: string }) {
+  console.log({photoURL})
+  return photoURL ? (
+    <img src={photoURL} alt={displayName ?? ""} referrerPolicy="no-referrer" className={`${size} rounded-full object-cover`} />
+  ) : (
+    <div className={`${size} rounded-full bg-[#005981] text-white flex items-center justify-center font-bold ${text}`}>
+      {getInitials(displayName)}
+    </div>
+  );
+}
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const { pathname } = useLocation();
-  const isWhite = scrolled || pathname === "/learn";
+  const isBlue = scrolled;
+  const isWhite = !isBlue;
   const [menuOpen, setMenuOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [authOpen, setAuthOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const { user, signOut } = useAuth();
+
+  console.log({user})
+
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node))
+        setDropdownOpen(false);
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
@@ -62,15 +96,43 @@ export default function Navbar() {
 
             {/* Desktop Actions */}
             <div className="hidden md:flex items-center space-x-3">
-              <button
-                onClick={() => setAuthOpen(true)}
-                className={`text-sm font-medium flex items-center gap-1.5 transition-colors ${
-                  isWhite ? "text-gray-700 hover:text-[#005981]" : "text-white/90 hover:text-white"
-                }`}
-              >
-                <UserCircle className="w-5 h-5" />
-                Sign In
-              </button>
+              {user ? (
+                <div className="relative" ref={dropdownRef}>
+                  <button
+                    onClick={() => setDropdownOpen(!dropdownOpen)}
+                    className="flex items-center gap-2 transition-colors"
+                  >
+                    <UserAvatar photoURL={user.photoURL} displayName={user.displayName} />
+                    <span className={`text-sm font-medium ${isWhite ? "text-gray-700" : "text-white"}`}>
+                      {user.displayName?.split(" ")[0] ?? "Account"}
+                    </span>
+                  </button>
+                  {dropdownOpen && (
+                    <div className="absolute right-0 mt-2 w-44 bg-white rounded-xl shadow-lg border border-gray-100 py-1 z-50">
+                      <div className="px-4 py-2 border-b border-gray-100">
+                        <p className="text-sm font-semibold text-gray-800 truncate">{user.displayName}</p>
+                        <p className="text-xs text-gray-400 truncate">{user.email}</p>
+                      </div>
+                      <button
+                        onClick={() => { signOut(); setDropdownOpen(false); }}
+                        className="w-full flex items-center gap-2 px-4 py-2 text-sm text-red-500 hover:bg-red-50 transition-colors"
+                      >
+                        <LogOut className="w-4 h-4" /> Sign Out
+                      </button>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <button
+                  onClick={() => setAuthOpen(true)}
+                  className={`text-sm font-medium flex items-center gap-1.5 transition-colors ${
+                    isWhite ? "text-gray-700 hover:text-[#005981]" : "text-white/90 hover:text-white"
+                  }`}
+                >
+                  <UserCircle className="w-5 h-5" />
+                  Sign In
+                </button>
+              )}
               <button
                 onClick={() => setModalOpen(true)}
                 className={`inline-flex h-9 items-center justify-center rounded-md px-4 py-2 text-sm font-semibold border transition-colors ${
@@ -124,9 +186,21 @@ export default function Navbar() {
                 </Link>
               ))}
               <div className="pt-3 border-t border-gray-100 flex flex-col gap-2">
-                <button onClick={() => { setMenuOpen(false); setAuthOpen(true); }} className="text-sm font-medium text-gray-700 flex items-center gap-2">
-                  <UserCircle className="w-5 h-5" /> Sign In
-                </button>
+                {user ? (
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <UserAvatar photoURL={user.photoURL} displayName={user.displayName} size="w-7 h-7" text="text-xs" />
+                      <span className="text-sm font-medium text-gray-700">{user.displayName?.split(" ")[0]}</span>
+                    </div>
+                    <button onClick={() => { signOut(); setMenuOpen(false); }} className="text-sm text-red-500 flex items-center gap-1">
+                      <LogOut className="w-4 h-4" /> Sign Out
+                    </button>
+                  </div>
+                ) : (
+                  <button onClick={() => { setMenuOpen(false); setAuthOpen(true); }} className="text-sm font-medium text-gray-700 flex items-center gap-2">
+                    <UserCircle className="w-5 h-5" /> Sign In
+                  </button>
+                )}
                 <button
                   onClick={() => { setMenuOpen(false); setModalOpen(true); }}
                   className="inline-flex h-9 items-center justify-center rounded-md border border-[#005981] px-4 text-sm font-semibold text-[#005981]"

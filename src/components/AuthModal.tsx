@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { X, Eye, EyeOff, CheckCircle2, Mail } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { signInWithPopup } from "firebase/auth";
+import { auth, googleProvider } from "@/lib/firebase";
 
 interface Props {
   open: boolean;
@@ -72,6 +74,15 @@ export default function AuthModal({ open, onClose, defaultTab = "signin" }: Prop
   const change = (setter: any) => (e: React.ChangeEvent<HTMLInputElement>) => {
     setter((p: any) => ({ ...p, [e.target.name]: e.target.value }));
     setErrors((p) => ({ ...p, [e.target.name]: "" }));
+  };
+
+  const handleGoogleSignIn = async () => {
+    try {
+      await signInWithPopup(auth, googleProvider);
+      onClose();
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const switchTab = (t: "signin" | "signup") => {
@@ -155,7 +166,7 @@ export default function AuthModal({ open, onClose, defaultTab = "signin" }: Prop
               className="px-6 py-6 space-y-3"
             >
               {/* Social buttons */}
-              <button type="button" className="w-full h-11 rounded-full border border-slate-200 flex items-center justify-center gap-3 text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-colors">
+              <button type="button" onClick={handleGoogleSignIn} className="w-full h-11 rounded-full border border-slate-200 flex items-center justify-center gap-3 text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-colors">
                 <GoogleIcon />
                 Continue with Google
               </button>
