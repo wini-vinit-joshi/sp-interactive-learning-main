@@ -1,43 +1,36 @@
 import { Link } from "react-router-dom";
-import { Phone, Mail } from "lucide-react";
+import { Phone, Mail, Linkedin, Facebook, Twitter, Instagram } from "lucide-react";
 
-const WHO_WE_SERVE = ["Home Buyers", "Homeowners", "Home Sellers"];
-
-const QUICK_LINKS = [
-  "About WIN",
-  "Services",
-  "Reviews",
-  "FAQs",
-  "Home Maintenance Check",
-  "Sample Report",
-  "Resource Center",
-  "Own a WIN Franchise",
-  "WIN in the Media",
+const WHY_WIN = [
+  "Training and Licensing",
+  "End-to-End Marketing",
+  "Proprietary Technology",
+  "Success Stories",
 ];
 
-const CONTACTS = [
-  {
-    heading: "Schedule an Inspection",
-    phone: "(800) 309-6753",
-    email: "info@wini.com",
-  },
-  {
-    heading: "Become a WIN Vendor",
-    phone: "(312) 557-9319",
-    email: "vendors@wini.com",
-  },
-  {
-    heading: "Be a Franchise Owner",
-    phone: "(800) 967-8127",
-    email: "franchising@wini.com",
-  },
+const ABOUT_US = [
+  "Culture of Brotherhood",
+  "Support Team",
+];
+
+const RESOURCES = [
+  "Articles",
+  "Becoming a Home Inspector",
+  "Frequently Asked Questions",
+];
+
+const SOCIAL = [
+  { label: "LinkedIn", icon: Linkedin, href: "#" },
+  { label: "Facebook", icon: Facebook, href: "#" },
+  { label: "X (Twitter)", icon: Twitter, href: "#" },
+  { label: "Instagram", icon: Instagram, href: "#" },
 ];
 
 export default function Footer() {
   return (
     <footer style={{ backgroundColor: "#005981" }} className="text-white">
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-14">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
 
           {/* Brand */}
           <div className="lg:col-span-1">
@@ -46,66 +39,66 @@ export default function Footer() {
               alt="WIN Home Inspection"
               className="h-10 w-auto mb-4"
             />
-            <p className="text-sm text-white/70 leading-relaxed">
-              Empowering individuals to learn the skills of home inspection and build a thriving business with a proven franchise model.
-            </p>
           </div>
 
-          {/* Who We Serve */}
+          {/* Why WIN */}
           <div>
-            <h3 className="text-sm font-bold uppercase tracking-wider text-white mb-4">
-              Who We Serve
-            </h3>
+            <h3 className="text-sm font-bold uppercase tracking-wider text-white mb-4">Why WIN</h3>
             <ul className="space-y-2">
-              {WHO_WE_SERVE.map((item) => (
+              {WHY_WIN.map((item) => (
                 <li key={item}>
-                  <a href="#" className="text-sm text-white/70 hover:text-white transition-colors">
-                    {item}
-                  </a>
-                </li>
-              ))}
-            </ul>
-
-            <h3 className="text-sm font-bold uppercase tracking-wider text-white mt-8 mb-4">
-              Quick Links
-            </h3>
-            <ul className="space-y-2">
-              {QUICK_LINKS.map((item) => (
-                <li key={item}>
-                  <a href="#" className="text-sm text-white/70 hover:text-white transition-colors">
-                    {item}
-                  </a>
+                  <a href="#" className="text-sm text-white/70 hover:text-white transition-colors">{item}</a>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Contact Us — spans 2 cols on large screens */}
-          <div className="lg:col-span-2">
-            <h3 className="text-sm font-bold uppercase tracking-wider text-white mb-6">
-              Contact Us
-            </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-              {CONTACTS.map(({ heading, phone, email }) => (
-                <div key={heading}>
-                  <p className="text-sm font-semibold text-white mb-3">{heading}</p>
-                  <a
-                    href={`tel:${phone.replace(/\D/g, "")}`}
-                    className="flex items-center gap-2 text-sm text-white/70 hover:text-white transition-colors mb-2"
-                  >
-                    <Phone className="w-4 h-4 shrink-0" />
-                    {phone}
-                  </a>
-                  <a
-                    href={`mailto:${email}`}
-                    className="flex items-center gap-2 text-sm text-white/70 hover:text-white transition-colors"
-                  >
-                    <Mail className="w-4 h-4 shrink-0" />
-                    {email}
-                  </a>
-                </div>
+          {/* About Us */}
+          <div>
+            <h3 className="text-sm font-bold uppercase tracking-wider text-white mb-4">About Us</h3>
+            <ul className="space-y-2">
+              {ABOUT_US.map((item) => (
+                <li key={item}>
+                  <a href="#" className="text-sm text-white/70 hover:text-white transition-colors">{item}</a>
+                </li>
               ))}
-            </div>
+            </ul>
+          </div>
+
+          {/* Resources */}
+          <div>
+            <h3 className="text-sm font-bold uppercase tracking-wider text-white mb-4">Resources</h3>
+            <ul className="space-y-2">
+              {RESOURCES.map((item) => (
+                <li key={item}>
+                  <a href="#" className="text-sm text-white/70 hover:text-white transition-colors">{item}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Follow Us + Contact Us */}
+          <div>
+            <h3 className="text-sm font-bold uppercase tracking-wider text-white mb-4">Follow Us</h3>
+            <ul className="mb-8 flex items-center gap-1">
+              {SOCIAL.map(({ label, icon: Icon, href }) => (
+                <li key={label} className="p-0 m-0">
+                  <a href={href} className="flex items-center gap-2 p-0 text-sm text-white/70 hover:text-white transition-colors">
+                    <Icon className="w-4 h-4 shrink-0" />
+                  </a>
+                </li>
+              ))}
+            </ul>
+
+            <h3 className="text-sm font-bold uppercase tracking-wider text-white mb-4">Contact Us</h3>
+            <a href="tel:8009678127" className="flex items-center gap-2 text-sm text-white/70 hover:text-white transition-colors mb-2">
+              <Phone className="w-4 h-4 shrink-0" />
+              (800) 967-8127
+            </a>
+            <a href="mailto:franchising@wini.com" className="flex items-center gap-2 text-sm text-white/70 hover:text-white transition-colors">
+              <Mail className="w-4 h-4 shrink-0" />
+              franchising@wini.com
+            </a>
           </div>
 
         </div>

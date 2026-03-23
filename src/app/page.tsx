@@ -134,7 +134,7 @@ export default function Home() {
       </section>
 
       {/* CTA Banner */}
-      <section className="py-24 bg-blue-600 relative overflow-hidden">
+      <section className="py-24 bg-[#f4f4f4] relative overflow-hidden">
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 mix-blend-overlay"></div>
         <div className="container mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 relative z-10 text-center">
           <h2 className="text-4xl font-extrabold text-white mb-6">Turn your skills into a business</h2>

@@ -25,7 +25,7 @@ const CATEGORIES: Category[] = [
     label: "Exterior",
     locked: false,
     video: "/assets/video/Exterior Inspection Demo Keith V2.mp4",
-    title: "Exterior Inspection 101",
+    title: "Exterior Inspection",
     description: "Learn the fundamentals of assessing siding, trim, grading, and functional exterior elements.",
     chapters: [
       { title: "Introduction", time: 0 },
@@ -376,7 +376,7 @@ export default function LearnPage() {
         </div>
       </div>
              {/* ── CTA Banner ── */}
-      <section className="py-24 relative overflow-hidden bg-[#FBF4E9]">
+      <section className="py-24 relative overflow-hidden bg-[#f4f4f4]">
         <div className="container mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 relative z-10 text-center">
           <h2 className="text-4xl font-extrabold text-[#005981] mb-6">Turn your skills into a business</h2>
           <p className="text-xl text-[#005981] mb-10 max-w-2xl mx-auto">

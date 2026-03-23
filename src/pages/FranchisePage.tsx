@@ -4,6 +4,7 @@ import { API_BASE_URL } from "@/config";
 
 export default function FranchisePage() {
   return (
+    <>
     <div className="bg-white">
       <section className="relative py-32 overflow-hidden" style={{ backgroundColor: "#003d5c" }}>
         <div className="absolute inset-0">
@@ -193,8 +194,9 @@ export default function FranchisePage() {
           </div>
         </div>
       </section>
-      <FranchiseChatbot />
     </div>
+    <FranchiseChatbot />
+    </>
   );
 }
 
