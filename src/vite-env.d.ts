@@ -1,5 +1,11 @@
 /// <reference types="vite/client" />
 
+declare namespace JSX {
+  interface IntrinsicElements {
+    "elevenlabs-convai": React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement> & { "agent-id": string }, HTMLElement>;
+  }
+}
+
 interface ImportMetaEnv {
   readonly VITE_API_BASE_URL: string;
   readonly VITE_FIREBASE_API_KEY: string;

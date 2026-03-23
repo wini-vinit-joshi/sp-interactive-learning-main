@@ -32,7 +32,7 @@ export default function Home() {
             <img
               src="assets/images/1-Ranked-Badge.png"
               alt="Entrepreneur Franchise 500 #1 Ranked"
-              className="h-28 w-auto drop-shadow-2xl"
+              className="h-32 w-auto drop-shadow-2xl"
             />
             {/* <div className="rounded-xl border border-[#D4A656]/40 bg-[#003d5c]/70 backdrop-blur-sm px-6 py-4">
               <p className="text-[#D4A656] text-xs font-bold uppercase tracking-widest mb-1">Entrepreneur Franchise 500</p>

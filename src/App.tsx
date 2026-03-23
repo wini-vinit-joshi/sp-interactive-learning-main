@@ -14,11 +14,22 @@ function ScrollToTop() {
   return null;
 }
 
+function ElevenLabsWidget() {
+  useEffect(() => {
+    const el = document.createElement("elevenlabs-convai");
+    el.setAttribute("agent-id", "agent_0601kmd4yhq6ennr2aaeqedyvk32");
+    document.body.appendChild(el);
+    return () => { document.body.removeChild(el); };
+  }, []);
+  return null;
+}
+
 export default function App() {
   return (
     <BrowserRouter>
       <div className="min-h-full flex flex-col bg-slate-50 relative">
         <ScrollToTop />
+        <ElevenLabsWidget />
         <Navbar />
         <main className="flex-1 flex flex-col pt-0">
           <Routes>

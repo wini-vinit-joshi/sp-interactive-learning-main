@@ -1,8 +1,9 @@
 import { ArrowRight, BarChart3, Users, BookOpen, ShieldCheck } from "lucide-react";
-import { useState, useRef, useEffect } from "react";
-import { API_BASE_URL } from "@/config";
+import { useState } from "react";
+import ConsultationModal from "@/components/ConsultationModal";
 
 export default function FranchisePage() {
+  const [modalOpen, setModalOpen] = useState(false);
   return (
     <>
     <div className="bg-white">
@@ -35,14 +36,12 @@ export default function FranchisePage() {
                 >
                   Visit Official Franchise Page <ArrowRight className="ml-2 w-4 h-4" />
                 </a>
-                <a
-                  href="https://winfranchising.com/contact"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  onClick={() => setModalOpen(true)}
                   className="inline-flex h-9 items-center justify-center rounded-md px-4 py-2 text-sm font-semibold text-white border border-white/40 transition-colors hover:bg-white/10"
                 >
                   Book a Call
-                </a>
+                </button>
               </div>
             </div>
             <div className="w-full lg:w-[380px] shrink-0 hidden lg:block" />
@@ -194,180 +193,8 @@ export default function FranchisePage() {
         </div>
       </section>
     </div>
-    <FranchiseChatbot />
+    <ConsultationModal open={modalOpen} onClose={() => setModalOpen(false)} />
     </>
   );
 }
 
-function parseMarkdown(text: string) {
-  const lines = text.split('\n');
-  const elements = [];
-  let inList = false;
-  let listItems = [];
-
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i];
-    if (line.trim().startsWith('- ')) {
-       let item = line.trim().substring(2);
-       item = item.replace(/\*\*\*(.*?)\*\*\*/g, '<strong><em>$1</em></strong>');
-       item = item.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-       listItems.push(<li key={i} dangerouslySetInnerHTML={{__html: item}} />);
-       inList = true;
-       continue;
-    } 
-    if (inList) {
-       elements.push(<ul key={'ul-'+i} className="list-disc list-outside ml-4 mb-2">{listItems}</ul>);
-       listItems = [];
-       inList = false;
-    }
-    if (line.trim() === '') continue;
-
-    let parsedLine = line.replace(/\*\*\*(.*?)\*\*\*/g, '<strong><em>$1</em></strong>');
-    parsedLine = parsedLine.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-
-    if (line.startsWith('### ')) {
-       elements.push(<h3 key={i} className="text-[14px] font-bold text-[#005981] mt-3 mb-1" dangerouslySetInnerHTML={{__html: parsedLine.substring(4)}} />);
-    } else if (line.startsWith('#### ')) {
-       elements.push(<h4 key={i} className="text-[13px] font-bold text-slate-800 mt-2 mb-1" dangerouslySetInnerHTML={{__html: parsedLine.substring(5)}} />);
-    } else {
-       elements.push(<p key={i} className="mb-1.5" dangerouslySetInnerHTML={{__html: parsedLine}} />);
-    }
-  }
-  if (inList) {
-     elements.push(<ul key={'ul-end'} className="list-disc list-outside ml-4 mb-2">{listItems}</ul>);
-  }
-  return <div className="space-y-0.5">{elements}</div>;
-}
-
-function FranchiseChatbot() {
-  const [messages, setMessages] = useState<{ role: "user" | "ai"; text: string }[]>([]);
-  const [input, setInput] = useState("");
-  const [isTypingExample, setIsTypingExample] = useState(true);
-  const [isAiTyping, setIsAiTyping] = useState(false);
-  const scrollRef = useRef<HTMLDivElement>(null);
-
-  const exampleQ = "What is the initial franchise fee?";
-
-  useEffect(() => {
-    let i = 0;
-    const interval = setInterval(() => {
-      if (!isTypingExample) {
-        clearInterval(interval);
-        return;
-      }
-      setInput(exampleQ.substring(0, i + 1));
-      i++;
-      if (i >= exampleQ.length) clearInterval(interval);
-    }, 60);
-    return () => clearInterval(interval);
-  }, [isTypingExample]);
-
-  useEffect(() => {
-    const el = scrollRef.current;
-    if (el) el.scrollTop = el.scrollHeight;
-  }, [messages, isAiTyping]);
-
-  const send = async () => {
-    const text = input.trim();
-    if (!text || isAiTyping) return;
-    setIsTypingExample(false);
-    
-    setMessages((prev) => [...prev, { role: "user", text }]);
-    setInput("");
-    setIsAiTyping(true);
-
-    try {
-      const res = await fetch(`${API_BASE_URL}/api/franchise-consultant`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          session_id: "fran123",
-          user_message: text
-        })
-      });
-      const data = await res.json();
-      if (data.success && data.reply) {
-        setMessages((prev) => [...prev, { role: "ai", text: data.reply }]);
-      } else {
-        setMessages((prev) => [...prev, { role: "ai", text: "Sorry, I couldn't get a response right now." }]);
-      }
-    } catch (err) {
-      console.error(err);
-      setMessages((prev) => [...prev, { role: "ai", text: "Something went wrong. Please try again." }]);
-    } finally {
-      setIsAiTyping(false);
-    }
-  };
-
-  return (
-    <div className="fixed bottom-6 right-6 z-50 w-[calc(100%-3rem)] max-w-[380px] flex flex-col justify-end gap-3 pointer-events-none">
-      
-      {/* Floating Bubbles */}
-      {messages.length > 0 && (
-        <div 
-          ref={scrollRef} 
-          className="flex flex-col gap-3 overflow-y-auto max-h-[500px] pointer-events-auto"
-          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-        >
-          {messages.map((msg, i) => (
-            <div key={i} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
-              <div
-                className={`max-w-[85%] px-5 py-4 rounded-[24px] text-[15px] leading-relaxed shadow-[0_12px_40px_rgba(0,0,0,0.12)] ${
-                  msg.role === "user"
-                    ? "text-white rounded-br-sm inline-block font-medium"
-                    : "bg-white text-slate-800 rounded-bl-sm border-2 border-slate-100/80"
-                }`}
-                style={msg.role === "user" ? { backgroundColor: "#005981", boxShadow: "0 12px 40px rgba(0,89,129,0.3)" } : {}}
-              >
-                {msg.role === "ai" ? parseMarkdown(msg.text) : msg.text}
-              </div>
-            </div>
-          ))}
-          {isAiTyping && (
-            <div className="flex justify-start">
-              <div className="bg-white text-slate-700 px-6 py-4 rounded-[24px] rounded-bl-sm text-xs flex gap-1.5 items-center shadow-[0_12px_40px_rgba(0,0,0,0.12)] border-2 border-slate-100/80">
-                <span className="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce" />
-                <span className="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce" style={{ animationDelay: "0.15s" }} />
-                <span className="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce" style={{ animationDelay: "0.3s" }} />
-              </div>
-            </div>
-          )}
-        </div>
-      )}
-
-      {/* Floating Input */}
-      <div className="bg-white rounded-[32px] shadow-[0_12px_40px_rgba(0,89,129,0.25)] ring-4 ring-[#005981]/10 flex gap-3 p-2.5 items-center pointer-events-auto transition-transform hover:scale-[1.02]">
-        <div className="relative w-11 h-11 rounded-full flex items-center justify-center shrink-0 ml-1 bg-gradient-to-br from-[#005981] to-[#0080b8] shadow-inner">
-          <span className="text-[13px] font-extrabold tracking-wider text-white">AI</span>
-          <span className="absolute top-0 right-0 w-3.5 h-3.5 bg-green-400 border-2 border-white rounded-full shadow-sm animate-pulse"></span>
-        </div>
-        <input
-          type="text"
-          value={input}
-          onChange={(e) => {
-            setInput(e.target.value);
-            setIsTypingExample(false);
-          }}
-          onFocus={() => {
-            if (isTypingExample) setIsTypingExample(false);
-          }}
-          onKeyDown={(e) => e.key === "Enter" && send()}
-          placeholder="Ask a franchise question..."
-          className="flex-1 text-[15px] font-medium bg-transparent focus:outline-none text-slate-800 placeholder:text-slate-400"
-        />
-        <button
-          onClick={send}
-          disabled={!input.trim() || isAiTyping}
-          className="w-12 h-12 rounded-full flex items-center justify-center text-white disabled:opacity-40 shrink-0 transition-all hover:opacity-90 active:scale-95 shadow-md mr-1"
-          style={{ backgroundColor: "#005981" }}
-        >
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="mr-0.5 mt-0.5">
-            <line x1="22" y1="2" x2="11" y2="13" />
-            <polygon points="22 2 15 22 11 13 2 9 22 2" />
-          </svg>
-        </button>
-      </div>
-      
-    </div>
-  );
-}
