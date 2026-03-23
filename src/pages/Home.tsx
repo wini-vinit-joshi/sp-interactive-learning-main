@@ -3,9 +3,11 @@ import { ArrowRight, CheckCircle2, PlayCircle, Lock } from "lucide-react";
 import { useState } from "react";
 import AuthModal from "@/components/AuthModal";
 import CTABanner from "@/components/CTABanner";
+import { useAuth } from "@/context/AuthContext";
 
 export default function Home() {
   const [signUpModal, setSignUpModal] = useState(false);
+  const { user } = useAuth();
   return (
     <div className="flex flex-col min-h-screen" style={{ fontFamily: 'Axiforma, Arial, sans-serif' }}>
 
@@ -112,7 +114,7 @@ export default function Home() {
             </div>
             <div className="w-full md:w-[480px] shrink-0">
               <img
-                src="https://www.wini.com/wp-content/uploads/2023/01/veteran-event.jpg"
+                src="/assets/images/Veteran.jpg"
                 alt="Veteran Friendly Franchise Event"
                 className="w-full h-[320px] object-cover rounded-2xl shadow-xl"
                 onError={(e) => {
@@ -139,7 +141,7 @@ export default function Home() {
             {/* Unlocked — Exterior */}
             <Link to="/learn" className="group block bg-white rounded-3xl overflow-hidden shadow-sm border border-slate-200 transition-all hover:shadow-xl">
               <div className="h-48 flex items-center justify-center" style={{ background: "linear-gradient(135deg, #005981, #0080b8)" }}>
-               <img src="assets/images/Exterior.png" alt="Exterior" />
+                <img src="assets/images/Exterior.png" alt="Exterior" className="object-contain" />
               </div>
               <div className="p-8">
                 <div className="flex justify-between items-center mb-4">
@@ -151,33 +153,37 @@ export default function Home() {
             </Link>
 
             {/* Locked — Electrical */}
-            <div className="relative bg-white rounded-3xl overflow-hidden shadow-sm border border-slate-200 cursor-pointer group" onClick={() => setSignUpModal(true)}>
-              <div className="h-48 bg-slate-200 flex items-center justify-center">
-                <img src="assets/images/Electrical.png" alt="Electrical" />
+            <div className="relative bg-white rounded-3xl overflow-hidden shadow-sm border border-slate-200 cursor-pointer group transition-all hover:shadow-xl" onClick={() => !user && setSignUpModal(true)}>
+              <div className="h-48 bg-slate-200 flex items-center justify-center overflow-hidden">
+                <img src="assets/images/Electrical.png" alt="Electrical" className="object-contain" />
               </div>
               <div className="p-8">
-                <h3 className="text-2xl font-bold text-slate-900 opacity-60 mb-4">Electrical</h3>
-                <p className="text-slate-500 opacity-60 text-base">Master the detection of faulty wiring, panel issues, and safety hazards.</p>
+                <h3 className={`text-2xl font-bold text-slate-900 mb-4 ${!user ? "opacity-60" : ""}`}>Electrical</h3>
+                <p className={`text-slate-500 text-base ${!user ? "opacity-60" : ""}`}>Master the detection of faulty wiring, panel issues, and safety hazards.</p>
               </div>
-              <div className="absolute inset-0 bg-white/50 flex flex-col items-center justify-center backdrop-blur-[2px]">
-                <Lock className="w-10 h-10 text-slate-600 mb-3" />
-                <span className="bg-slate-900 text-white px-4 py-2 rounded-full text-sm font-medium shadow-lg">Sign in to unlock</span>
-              </div>
+              {!user && (
+                <div className="absolute inset-0 bg-white/50 flex flex-col items-center justify-center backdrop-blur-[2px]">
+                  <Lock className="w-10 h-10 text-slate-600 mb-3" />
+                  <span className="bg-slate-900 text-white px-4 py-2 rounded-full text-sm font-medium shadow-lg">Sign in to unlock</span>
+                </div>
+              )}
             </div>
 
             {/* Locked — Plumbing */}
-            <div className="relative bg-white rounded-3xl overflow-hidden shadow-sm border border-slate-200 cursor-pointer group" onClick={() => setSignUpModal(true)}>
-              <div className="h-48 bg-slate-200 flex items-center justify-center">
-                <img src="assets/images/Plumbing.png" alt="Plumbing" />
+            <div className="relative bg-white rounded-3xl overflow-hidden shadow-sm border border-slate-200 cursor-pointer group transition-all hover:shadow-xl" onClick={() => !user && setSignUpModal(true)}>
+              <div className="h-48 bg-slate-200 flex items-center justify-center overflow-hidden">
+                <img src="assets/images/Plumbing.png" alt="Plumbing" className="object-cover" />
               </div>
               <div className="p-8">
-                <h3 className="text-2xl font-bold text-slate-900 opacity-60 mb-4">Plumbing</h3>
-                <p className="text-slate-500 opacity-60 text-base">Identify pipe leaks, water heater defects, and drainage problems.</p>
+                <h3 className={`text-2xl font-bold text-slate-900 mb-4 ${!user ? "opacity-60" : ""}`}>Plumbing</h3>
+                <p className={`text-slate-500 text-base ${!user ? "opacity-60" : ""}`}>Identify pipe leaks, water heater defects, and drainage problems.</p>
               </div>
-              <div className="absolute inset-0 bg-white/50 flex flex-col items-center justify-center backdrop-blur-[2px]">
-                <Lock className="w-10 h-10 text-slate-600 mb-3" />
-                <span className="bg-slate-900 text-white px-4 py-2 rounded-full text-sm font-medium shadow-lg">Sign in to unlock</span>
-              </div>
+              {!user && (
+                <div className="absolute inset-0 bg-white/50 flex flex-col items-center justify-center backdrop-blur-[2px]">
+                  <Lock className="w-10 h-10 text-slate-600 mb-3" />
+                  <span className="bg-slate-900 text-white px-4 py-2 rounded-full text-sm font-medium shadow-lg">Sign in to unlock</span>
+                </div>
+              )}
             </div>
           </div>
         </div>

@@ -228,7 +228,7 @@ export default function LearnPage() {
                 {!cat.locked && !isActive && pct > 0 && (
                   <span className="absolute inset-0 rounded-full opacity-10" style={{ width: `${pct}%`, backgroundColor: "#005981" }} />
                 )}
-                {cat.locked && <Lock className="w-3.5 h-3.5 shrink-0" />}
+                {/* {cat.locked && <Lock className="w-3.5 h-3.5 shrink-0" />} */}
                 {cat.preview && <Lock className="w-3.5 h-3.5 shrink-0 opacity-50" />}
                 <span>{cat.label}</span>
                 {!cat.locked && pct > 0 && (
