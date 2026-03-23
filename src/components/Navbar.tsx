@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Menu, X, UserCircle } from "lucide-react";
 import ConsultationModal from "./ConsultationModal";
 import AuthModal from "./AuthModal";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
+  const { pathname } = useLocation();
+  const isWhite = scrolled || pathname === "/learn";
   const [menuOpen, setMenuOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [authOpen, setAuthOpen] = useState(false);
@@ -20,19 +22,19 @@ export default function Navbar() {
     <>
       <nav
         className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 ${
-          scrolled
+          isWhite
             ? "bg-white border-b border-gray-200 shadow-sm"
             : "bg-[#005981]"
         }`}
       >
         <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex h-16 items-center justify-between">
+          <div className="flex h-24 items-center justify-between">
             {/* Logo */}
             <Link to="/" className="flex items-center space-x-3">
               <img
                 src="https://d2nnm6ppct4rc3.cloudfront.net/WIN_logo_white_SVG_09244e565a.svg"
                 alt="WIN Home Inspection"
-                className={`h-8 w-auto transition-all duration-300 ${scrolled ? "[filter:brightness(0)_saturate(100%)_invert(24%)_sepia(97%)_saturate(600%)_hue-rotate(170deg)_brightness(90%)]" : "brightness-100"}`}
+                className={`h-[57px] transition-all duration-300 ${isWhite ? "[filter:brightness(0)_saturate(100%)_invert(24%)_sepia(97%)_saturate(600%)_hue-rotate(170deg)_brightness(90%)]" : "brightness-100"}`}
               />
             </Link>
 
@@ -46,11 +48,12 @@ export default function Navbar() {
                 <Link
                   key={to}
                   to={to}
-                  className={`text-sm font-medium transition-colors ${
-                    scrolled
+                  className={`transition-colors ${
+                    isWhite
                       ? "text-gray-700 hover:text-[#005981]"
                       : "text-white/90 hover:text-white"
-                  }`}
+                  } text-[14px] cursor-pointer`}
+                  style={{ fontFamily: 'Axiforma', fontWeight: 500 }}
                 >
                   {label}
                 </Link>
@@ -62,7 +65,7 @@ export default function Navbar() {
               <button
                 onClick={() => setAuthOpen(true)}
                 className={`text-sm font-medium flex items-center gap-1.5 transition-colors ${
-                  scrolled ? "text-gray-700 hover:text-[#005981]" : "text-white/90 hover:text-white"
+                  isWhite ? "text-gray-700 hover:text-[#005981]" : "text-white/90 hover:text-white"
                 }`}
               >
                 <UserCircle className="w-5 h-5" />
@@ -71,7 +74,7 @@ export default function Navbar() {
               <button
                 onClick={() => setModalOpen(true)}
                 className={`inline-flex h-9 items-center justify-center rounded-md px-4 py-2 text-sm font-semibold border transition-colors ${
-                  scrolled
+                  isWhite
                     ? "border-[#005981] text-[#005981] hover:bg-[#005981] hover:text-white"
                     : "border-white text-white hover:bg-white hover:text-[#005981]"
                 }`}
@@ -83,7 +86,7 @@ export default function Navbar() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className={`inline-flex h-9 items-center justify-center rounded-md px-4 py-2 text-sm font-semibold shadow transition-colors ${
-                  scrolled
+                  isWhite
                     ? "bg-[#005981] text-white hover:bg-[#004a6e]"
                     : "bg-white text-[#005981] hover:bg-white/90"
                 }`}
@@ -94,7 +97,7 @@ export default function Navbar() {
 
             {/* Mobile menu button */}
             <button
-              className={`md:hidden transition-colors ${scrolled ? "text-gray-700" : "text-white"}`}
+              className={`md:hidden transition-colors ${isWhite ? "text-gray-700" : "text-white"}`}
               onClick={() => setMenuOpen(!menuOpen)}
             >
               {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}

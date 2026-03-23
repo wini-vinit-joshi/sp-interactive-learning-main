@@ -38,7 +38,7 @@ const ARTICLES = [
 
 export default function ArticlesPage() {
   return (
-    <div className="bg-slate-50 min-h-screen pb-24">
+    <div className="bg-slate-50 min-h-screen py-20">
       <section className="py-20 px-4" style={{ backgroundColor: "#005981" }}>
         <div className="container mx-auto max-w-7xl text-center">
           <h1 className="text-4xl md:text-5xl font-extrabold text-white mb-6">Inspection Knowledge Hub</h1>

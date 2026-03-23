@@ -1,29 +1,29 @@
 import { Link } from "react-router-dom";
-import { Phone, Mail, Linkedin, Facebook, Twitter, Instagram } from "lucide-react";
+import { Phone, Mail } from "lucide-react";
 
 const WHY_WIN = [
-  "Training and Licensing",
-  "End-to-End Marketing",
-  "Proprietary Technology",
-  "Success Stories",
+  { label: "Training and Licensing", href: "https://winfranchising.com/why-win/training/" },
+  { label: "End-to-End Marketing", href: "https://winfranchising.com/why-win/marketing/" },
+  { label: "Proprietary Technology", href: "https://winfranchising.com/why-win/technology/" },
+  { label: "Success Stories", href: "https://winfranchising.com/reviews/" },
 ];
 
 const ABOUT_US = [
-  "Culture of Brotherhood",
-  "Support Team",
+  { label: "Culture of Brotherhood", href: "https://winfranchising.com/culture-of-brotherhood/" },
+  { label: "Support Team", href: "https://winfranchising.com/team/" },
 ];
 
 const RESOURCES = [
-  "Articles",
-  "Becoming a Home Inspector",
-  "Frequently Asked Questions",
+  { label: "Articles", href: "https://winfranchising.com/knowledge-center/" },
+  { label: "Becoming a Home Inspector", href: "https://winfranchising.com/how-to-become-a-home-inspector/" },
+  { label: "Frequently Asked Questions", href: "https://winfranchising.com/faq/" },
 ];
 
 const SOCIAL = [
-  { label: "LinkedIn", icon: Linkedin, href: "#" },
-  { label: "Facebook", icon: Facebook, href: "#" },
-  { label: "X (Twitter)", icon: Twitter, href: "#" },
-  { label: "Instagram", icon: Instagram, href: "#" },
+  { label: "LinkedIn", icon: "https://d2nnm6ppct4rc3.cloudfront.net/icons8_linkedin_2_73439bf95f.svg", href: "https://www.linkedin.com/company/66033/admin/" },
+  { label: "Facebook", icon: "https://d2nnm6ppct4rc3.cloudfront.net/facebook_20fa99c2a0.svg", href: "https://www.facebook.com/WINHomeInspection/" },
+  { label: "X (Twitter)", icon: "https://d2nnm6ppct4rc3.cloudfront.net/twitter_847ff1df9e.svg", href: "https://x.com/winhomeinspect" },
+  { label: "Instagram", icon: "https://d2nnm6ppct4rc3.cloudfront.net/instagram_d7878a3b2c.svg", href: "https://www.instagram.com/winhomeinspection/" },
 ];
 
 export default function Footer() {
@@ -37,7 +37,7 @@ export default function Footer() {
             <img
               src="https://d2nnm6ppct4rc3.cloudfront.net/WIN_logo_white_SVG_09244e565a.svg"
               alt="WIN Home Inspection"
-              className="h-10 w-auto mb-4"
+              className="h-[56px] mb-4"
             />
           </div>
 
@@ -46,8 +46,8 @@ export default function Footer() {
             <h3 className="text-sm font-bold uppercase tracking-wider text-white mb-4">Why WIN</h3>
             <ul className="space-y-2">
               {WHY_WIN.map((item) => (
-                <li key={item}>
-                  <a href="#" className="text-sm text-white/70 hover:text-white transition-colors">{item}</a>
+                <li key={item.label}>
+                  <a href={item.href} target="_blank" rel="noopener noreferrer" className="text-sm text-white/70 hover:text-white transition-colors">{item.label}</a>
                 </li>
               ))}
             </ul>
@@ -58,8 +58,8 @@ export default function Footer() {
             <h3 className="text-sm font-bold uppercase tracking-wider text-white mb-4">About Us</h3>
             <ul className="space-y-2">
               {ABOUT_US.map((item) => (
-                <li key={item}>
-                  <a href="#" className="text-sm text-white/70 hover:text-white transition-colors">{item}</a>
+                <li key={item.label}>
+                  <a href={item.href} target="_blank" rel="noopener noreferrer" className="text-sm text-white/70 hover:text-white transition-colors">{item.label}</a>
                 </li>
               ))}
             </ul>
@@ -70,8 +70,8 @@ export default function Footer() {
             <h3 className="text-sm font-bold uppercase tracking-wider text-white mb-4">Resources</h3>
             <ul className="space-y-2">
               {RESOURCES.map((item) => (
-                <li key={item}>
-                  <a href="#" className="text-sm text-white/70 hover:text-white transition-colors">{item}</a>
+                <li key={item.label}>
+                  <a href={item.href} target="_blank" rel="noopener noreferrer" className="text-sm text-white/70 hover:text-white transition-colors">{item.label}</a>
                 </li>
               ))}
             </ul>
@@ -80,11 +80,11 @@ export default function Footer() {
           {/* Follow Us + Contact Us */}
           <div>
             <h3 className="text-sm font-bold uppercase tracking-wider text-white mb-4">Follow Us</h3>
-            <ul className="mb-8 flex items-center gap-1">
-              {SOCIAL.map(({ label, icon: Icon, href }) => (
-                <li key={label} className="p-0 m-0">
-                  <a href={href} className="flex items-center gap-2 p-0 text-sm text-white/70 hover:text-white transition-colors">
-                    <Icon className="w-4 h-4 shrink-0" />
+            <ul className="mb-8 flex items-center gap-3">
+              {SOCIAL.map(({ label, icon, href }) => (
+                <li key={label}>
+                  <a href={href} className="flex items-center justify-center w-[25px] h-[25px] rounded-full transition-colors">
+                    <img src={icon} alt={label} className="w-[25px] h-[25px]" />
                   </a>
                 </li>
               ))}

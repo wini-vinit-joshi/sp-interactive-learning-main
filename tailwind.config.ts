@@ -3,6 +3,9 @@ export default {
   content: ["./index.html", "./src/**/*.{ts,tsx}"],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['Axiforma', 'Arial', 'sans-serif'],
+      },
       colors: {
         primary: {
           DEFAULT: "#005981",

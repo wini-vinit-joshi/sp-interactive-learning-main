@@ -2,14 +2,15 @@ import { Link } from "react-router-dom";
 import { ArrowRight, CheckCircle2, PlayCircle, Lock } from "lucide-react";
 import { useState } from "react";
 import AuthModal from "@/components/AuthModal";
+import CTABanner from "@/components/CTABanner";
 
 export default function Home() {
   const [signUpModal, setSignUpModal] = useState(false);
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen" style={{ fontFamily: 'Axiforma, Arial, sans-serif' }}>
 
       {/* ── Hero: Full-screen video ── */}
-      <section className="relative h-screen min-h-[600px] flex items-center justify-center overflow-hidden">
+      <section className="relative h-[90vh] min-h-[600px] flex items-center justify-center overflow-hidden">
         {/* Background video */}
         <video
           className="absolute inset-0 w-full h-full object-cover"
@@ -23,19 +24,32 @@ export default function Home() {
         <div className="absolute inset-0 bg-[#005981]/70" />
 
         {/* Content */}
-        <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
-          <h1 className="text-5xl md:text-6xl font-extrabold text-white tracking-tight mb-6 leading-tight">
-            Learn Home Inspection.<br className="hidden md:block" />
+        <div className="relative z-10 container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full">
+          {/* Badge row */}
+          <div className="flex items-center gap-5 mb-8">
+            <img
+              src="assets/images/1-Ranked-Badge.png"
+              alt="Entrepreneur Franchise 500 #1 Ranked"
+              className="h-28 w-auto drop-shadow-2xl"
+            />
+            {/* <div className="rounded-xl border border-[#D4A656]/40 bg-[#003d5c]/70 backdrop-blur-sm px-6 py-4">
+              <p className="text-[#D4A656] text-xs font-bold uppercase tracking-widest mb-1">Entrepreneur Franchise 500</p>
+              <p className="text-white text-xl font-extrabold leading-snug">Ranked #1 for<br />4 Years in a Row</p>
+            </div> */}
+          </div>
+
+          <h1 className="text-5xl md:text-[61px] font-bold text-white tracking-tight mb-6 leading-[1.4em]">
+            Learn Home Inspection. <br className="hidden md:block" />
             <span className="text-[#D4A656]">Practice with AI.</span> Own Your Future.
           </h1>
-          <p className="text-xl text-white/80 mb-10 max-w-2xl mx-auto">
+          <p className="text-xl text-white/80 mb-10 max-w-5xl">
             Master the skills of home inspection through interactive, AI-driven training.
             No Prior Experience Needed.
           </p>
-          <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
+          <div className="flex flex-col sm:flex-row gap-4">
             <Link
               to="/learn"
-              className="w-full sm:w-auto inline-flex h-14 items-center justify-center rounded-full bg-white px-8 text-lg font-semibold text-[#005981] shadow-lg transition-all hover:bg-white/90 hover:scale-105"
+              className="inline-flex h-9 items-center justify-center rounded-md bg-white px-4 py-2 text-sm font-semibold text-[#005981] shadow transition-colors hover:bg-white/90"
             >
               Start Learning
             </Link>
@@ -61,7 +75,7 @@ export default function Home() {
                   <step.icon className="w-8 h-8" />
                 </div>
                 <h3 className="text-xl font-bold text-slate-900 mb-2">Step {i + 1}: {step.title}</h3>
-                <p className="text-slate-600">{step.desc}</p>
+                <p className="text-slate-600 text-base">{step.desc}</p>
                 {i < 2 && (
                   <div className="hidden md:block absolute top-1/2 -right-4 w-8 border-t-2 border-dashed border-slate-300 z-10 -translate-y-1/2" />
                 )}
@@ -71,7 +85,43 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── Training Categories ── */}
+      {/* ── Veteran Friendly ── */}
+      <section className="py-20 overflow-hidden relative" style={{ backgroundColor: '#f0f4f8' }}>
+        {/* Faded stars background */}
+        {/* <div className="absolute inset-0 opacity-[0.06]" style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cpolygon points='60,5 72,40 110,40 80,62 92,97 60,75 28,97 40,62 10,40 48,40' fill='%23003366'/%3E%3C/svg%3E")`,
+          backgroundSize: '120px 120px',
+        }} /> */}
+        {/* Red stripe accent */}
+        {/* <div className="absolute top-0 right-0 w-1/3 h-full opacity-[0.04]" style={{
+          background: 'linear-gradient(135deg, #cc0000 25%, transparent 25%, transparent 50%, #cc0000 50%, #cc0000 75%, transparent 75%)',
+          backgroundSize: '40px 40px',
+        }} /> */}
+        <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col md:flex-row items-center gap-12">
+            <div className="flex-1">
+              <h2 className="text-4xl font-extrabold text-slate-900 leading-tight mb-6">
+                We are Proud to be a<br />Veteran Friendly Franchise
+              </h2>
+              <p className="text-slate-600 text-base leading-relaxed max-w-lg">
+                Our veteran benefits include a{" "}
+                <strong style={{ color: "#005981" }}>5% discount on the initial franchise fee</strong>{" "}
+                as well as special financing for qualified candidates. By affiliating with organizations, we continue to help veterans explore opportunities they wouldn't ordinarily consider possible.
+              </p>
+            </div>
+            <div className="w-full md:w-[480px] shrink-0">
+              <img
+                src="https://www.wini.com/wp-content/uploads/2023/01/veteran-event.jpg"
+                alt="Veteran Friendly Franchise Event"
+                className="w-full h-[320px] object-cover rounded-2xl shadow-xl"
+                onError={(e) => {
+                  (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800&q=80";
+                }}
+              />
+            </div>
+          </div>
+        </div>
+      </section>
       <section className="py-24 bg-slate-50 border-y border-slate-200">
         <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-between items-end mb-12">
@@ -95,7 +145,7 @@ export default function Home() {
                   <h3 className="text-2xl font-bold text-slate-900">Exterior</h3>
                   <span className="px-3 py-1 bg-green-100 text-green-700 text-xs font-bold uppercase tracking-wider rounded-full">Unlocked</span>
                 </div>
-                <p className="text-slate-600">Learn to identify issues with siding, grading, roofs, and exterior structures.</p>
+                <p className="text-slate-600 text-base">Learn to identify issues with siding, grading, roofs, and exterior structures.</p>
               </div>
             </Link>
 
@@ -106,7 +156,7 @@ export default function Home() {
               </div>
               <div className="p-8">
                 <h3 className="text-2xl font-bold text-slate-900 opacity-60 mb-4">Electrical</h3>
-                <p className="text-slate-500 opacity-60">Master the detection of faulty wiring, panel issues, and safety hazards.</p>
+                <p className="text-slate-500 opacity-60 text-base">Master the detection of faulty wiring, panel issues, and safety hazards.</p>
               </div>
               <div className="absolute inset-0 bg-white/50 flex flex-col items-center justify-center backdrop-blur-[2px]">
                 <Lock className="w-10 h-10 text-slate-600 mb-3" />
@@ -121,7 +171,7 @@ export default function Home() {
               </div>
               <div className="p-8">
                 <h3 className="text-2xl font-bold text-slate-900 opacity-60 mb-4">Plumbing</h3>
-                <p className="text-slate-500 opacity-60">Identify pipe leaks, water heater defects, and drainage problems.</p>
+                <p className="text-slate-500 opacity-60 text-base">Identify pipe leaks, water heater defects, and drainage problems.</p>
               </div>
               <div className="absolute inset-0 bg-white/50 flex flex-col items-center justify-center backdrop-blur-[2px]">
                 <Lock className="w-10 h-10 text-slate-600 mb-3" />
@@ -132,24 +182,7 @@ export default function Home() {
         </div>
       </section>
 
-            {/* ── CTA Banner ── */}
-      <section className="py-24 relative overflow-hidden bg-[#f4f4f4]">
-        <div className="container mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-          <h2 className="text-4xl font-extrabold text-[#005981] mb-6">Turn your skills into a business</h2>
-          <p className="text-xl text-[#005981] mb-10 max-w-2xl mx-auto">
-            Ready to take the next step? Join the fastest-growing home inspection franchise network in the country.
-          </p>
-          <a
-            href="https://winfranchising.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex h-14 items-center justify-center rounded-full bg-white px-10 text-xl font-bold shadow-xl transition-all hover:scale-105"
-            style={{ color: "#005981" }}
-          >
-            Visit Official Franchise Site <ArrowRight className="ml-3 w-6 h-6" />
-          </a>
-        </div>
-      </section>
+<CTABanner />
 
 
       <AuthModal open={signUpModal} onClose={() => setSignUpModal(false)} defaultTab="signin" />

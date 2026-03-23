@@ -31,16 +31,15 @@ export default function FranchisePage() {
                   href="https://winfranchising.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex h-14 items-center justify-center rounded-full px-8 text-lg font-bold text-white shadow-lg transition-all hover:opacity-90 hover:scale-105"
-                  style={{ backgroundColor: "#005981" }}
+                  className="inline-flex h-9 items-center justify-center rounded-md bg-white px-4 py-2 text-sm font-semibold text-[#005981] shadow transition-colors hover:bg-white/90"
                 >
-                  Visit Official Franchise Page <ArrowRight className="ml-2 w-5 h-5" />
+                  Visit Official Franchise Page <ArrowRight className="ml-2 w-4 h-4" />
                 </a>
                 <a
                   href="https://winfranchising.com/contact"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex h-14 items-center justify-center rounded-full px-8 text-lg font-bold text-white border border-white/20 transition-all hover:bg-white/10"
+                  className="inline-flex h-9 items-center justify-center rounded-md px-4 py-2 text-sm font-semibold text-white border border-white/40 transition-colors hover:bg-white/10"
                 >
                   Book a Call
                 </a>

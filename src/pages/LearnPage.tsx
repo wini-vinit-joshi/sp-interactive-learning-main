@@ -3,6 +3,7 @@ import { Lock, Check, PlayCircle, FlaskConical, ArrowRight, CalendarCheck, Store
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import ImageBatchViewer from "@/components/ImageBatchViewer";
+import CTABanner from "@/components/CTABanner";
 import VideoPlayer, { ChapterPanel, Chapter } from "@/components/VideoPlayer";
 import ConsultationModal from "@/components/ConsultationModal";
 import AuthModal from "@/components/AuthModal";
@@ -207,9 +208,9 @@ export default function LearnPage() {
   }
 
   return (
-    <div className="bg-slate-50 min-h-screen pt-16">
+    <div className="bg-slate-50 min-h-screen pt-24">
       {/* Category Tab Bar */}
-      <div className="bg-white border-b sticky top-16 z-40 overflow-x-auto">
+      <div className="bg-white border-b sticky top-24 z-40 overflow-x-auto">
         <div className="container mx-auto max-w-7xl px-4 flex items-center space-x-2 py-3 min-w-max">
           {mergedCategories.map((cat) => {
             const pct = categoryProgress[cat.id] ?? 0;
@@ -218,12 +219,11 @@ export default function LearnPage() {
               <button
                 key={cat.id}
                 onClick={() => { if (!cat.locked) { setActiveCategory(cat.id); setVideoState({ currentTime: 0, duration: 0, activeChapter: 0 }); if (cat.preview) setSignUpModal(true); } }}
-                className={`relative flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold transition-all overflow-hidden ${
+                className={`relative inline-flex h-9 items-center gap-2 px-4 py-2 rounded-md text-sm font-semibold transition-colors overflow-hidden ${
                   cat.locked ? "bg-slate-100 text-slate-400 cursor-not-allowed"
-                  : isActive ? "text-white shadow-md"
+                  : isActive ? "bg-[#005981] text-white shadow"
                   : "bg-white text-slate-700 border border-slate-200 hover:border-[#005981] hover:text-[#005981]"
                 }`}
-                style={!cat.locked && isActive ? { backgroundColor: "#005981" } : {}}
               >
                 {!cat.locked && !isActive && pct > 0 && (
                   <span className="absolute inset-0 rounded-full opacity-10" style={{ width: `${pct}%`, backgroundColor: "#005981" }} />
@@ -245,7 +245,7 @@ export default function LearnPage() {
 
           {/* ── Left: Timeline sidebar ── */}
           <aside className="hidden lg:flex flex-col w-56 shrink-0">
-            <div className="sticky top-36">
+            <div className="sticky top-44">
               {/* Overall progress */}
               <div className="mb-5">
                 <div className="flex justify-between text-xs font-semibold text-slate-500 mb-1.5">
@@ -375,24 +375,10 @@ export default function LearnPage() {
           </div>
         </div>
       </div>
-             {/* ── CTA Banner ── */}
-      <section className="py-24 relative overflow-hidden bg-[#f4f4f4]">
-        <div className="container mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-          <h2 className="text-4xl font-extrabold text-[#005981] mb-6">Turn your skills into a business</h2>
-          <p className="text-xl text-[#005981] mb-10 max-w-2xl mx-auto">
-            Ready to take the next step? Join the fastest-growing home inspection franchise network in the country.
-          </p>
-          <a
-            href="https://winfranchising.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex h-14 items-center justify-center rounded-full bg-white px-10 text-xl font-bold shadow-xl transition-all hover:scale-105"
-            style={{ color: "#005981" }}
-          >
-            Visit Official Franchise Site <ArrowRight className="ml-3 w-6 h-6" />
-          </a>
-        </div>
-      </section>
+      <div className="mt-20">
+        <CTABanner />
+      </div>
+      
       <AuthModal open={signUpModal} onClose={() => { setSignUpModal(false); setActiveCategory("exterior"); }} defaultTab="signup" />
     </div>
   );
