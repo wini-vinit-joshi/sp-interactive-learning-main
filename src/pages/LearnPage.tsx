@@ -8,6 +8,7 @@ import VideoPlayer, { ChapterPanel, Chapter } from "@/components/VideoPlayer";
 import ConsultationModal from "@/components/ConsultationModal";
 import AuthModal from "@/components/AuthModal";
 import { API_BASE_URL } from "@/config";
+import { useAuth } from "@/context/AuthContext";
 
 interface Category {
   id: string;
@@ -111,9 +112,18 @@ const sectionIds = { video: "section-video", practice: "section-practice" };
 export default function LearnPage() {
   const [courseData, setCourseData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const { getToken, loading: authLoading, user } = useAuth();
 
   useEffect(() => {
-    fetch(`${API_BASE_URL}/api/metadata`)
+    if (authLoading) return;
+
+    user?.getIdToken().then((token) =>
+      { 
+        return fetch(`${API_BASE_URL}/api/metadata`, {
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
+      })
+    }
+    )
       .then(res => res.json())
       .then(data => {
         if (data.success && data.data.course1) {
@@ -125,7 +135,7 @@ export default function LearnPage() {
         console.error("Failed to fetch metadata", err);
         setLoading(false);
       });
-  }, []);
+  }, [authLoading]);
 
   const apiMapping: Record<string, string> = {
     exterior: "Exterior",

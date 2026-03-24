@@ -35,8 +35,6 @@ export default function Navbar() {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const { user, signOut } = useAuth();
 
-  console.log({user})
-
   useEffect(() => {
     const handler = (e: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node))
@@ -76,7 +74,7 @@ export default function Navbar() {
             <div className="hidden md:flex items-center space-x-6">
               {[
                 { to: "/learn", label: "Training Platform" },
-                { to: "/license", label: "License Platform" },
+                { to: "/license", label: "License Requirements" },
                 { to: "/franchise", label: "Franchise Opportunities" },
                 { to: "/articles", label: "Articles" },
               ].map(({ to, label }) => (
@@ -174,7 +172,7 @@ export default function Navbar() {
             <div className="px-4 py-4 space-y-3">
               {[
                 { to: "/learn", label: "Training Platform" },
-                { to: "/license", label: "License Platform" },
+                { to: "/license", label: "License Requirements" },
                 { to: "/franchise", label: "Franchise Opportunities" },
                 { to: "/articles", label: "Articles" },
               ].map(({ to, label }) => (
