@@ -112,30 +112,28 @@ const sectionIds = { video: "section-video", practice: "section-practice" };
 export default function LearnPage() {
   const [courseData, setCourseData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
-  const { getToken, loading: authLoading, user } = useAuth();
+  const { user } = useAuth();
 
   useEffect(() => {
-    if (authLoading) return;
-
-    user?.getIdToken().then((token) =>
-      { 
-        return fetch(`${API_BASE_URL}/api/metadata`, {
+    const fetchMetadata = async () => {
+      const token = await user?.getIdToken() ?? null;
+      fetch(`${API_BASE_URL}/api/metadata`, {
         headers: token ? { Authorization: `Bearer ${token}` } : {},
       })
-    }
-    )
-      .then(res => res.json())
-      .then(data => {
-        if (data.success && data.data.course1) {
-          setCourseData(data.data.course1);
-        }
-        setLoading(false);
-      })
-      .catch(err => {
-        console.error("Failed to fetch metadata", err);
-        setLoading(false);
-      });
-  }, [authLoading]);
+        .then(res => res.json())
+        .then(data => {
+          if (data.success && data.data.course1) {
+            setCourseData(data.data.course1);
+          }
+          setLoading(false);
+        })
+        .catch(err => {
+          console.error("Failed to fetch metadata", err);
+          setLoading(false);
+        });
+    };
+    fetchMetadata();
+  }, [user]);
 
   const apiMapping: Record<string, string> = {
     exterior: "Exterior",
