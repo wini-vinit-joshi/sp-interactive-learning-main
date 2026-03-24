@@ -1,6 +1,31 @@
 import { ArrowRight, BarChart3, Users, BookOpen, ShieldCheck } from "lucide-react";
 import { useState } from "react";
 import ConsultationModal from "@/components/ConsultationModal";
+import { MapContainer, TileLayer, CircleMarker, Tooltip } from "react-leaflet";
+import "leaflet/dist/leaflet.css";
+
+const FRANCHISE_LOCATIONS = [
+  { name: "Seattle, WA", lat: 47.6062, lng: -122.3321 },
+  { name: "Portland, OR", lat: 45.5051, lng: -122.6750 },
+  { name: "San Francisco, CA", lat: 37.7749, lng: -122.4194 },
+  { name: "Los Angeles, CA", lat: 34.0522, lng: -118.2437 },
+  { name: "Phoenix, AZ", lat: 33.4484, lng: -112.0740 },
+  { name: "Denver, CO", lat: 39.7392, lng: -104.9903 },
+  { name: "Dallas, TX", lat: 32.7767, lng: -96.7970 },
+  { name: "Houston, TX", lat: 29.7604, lng: -95.3698 },
+  { name: "Chicago, IL", lat: 41.8781, lng: -87.6298 },
+  { name: "Minneapolis, MN", lat: 44.9778, lng: -93.2650 },
+  { name: "Atlanta, GA", lat: 33.7490, lng: -84.3880 },
+  { name: "Miami, FL", lat: 25.7617, lng: -80.1918 },
+  { name: "Charlotte, NC", lat: 35.2271, lng: -80.8431 },
+  { name: "Washington, DC", lat: 38.9072, lng: -77.0369 },
+  { name: "Philadelphia, PA", lat: 39.9526, lng: -75.1652 },
+  { name: "New York, NY", lat: 40.7128, lng: -74.0060 },
+  { name: "Boston, MA", lat: 42.3601, lng: -71.0589 },
+  { name: "Nashville, TN", lat: 36.1627, lng: -86.7816 },
+  { name: "Columbus, OH", lat: 39.9612, lng: -82.9988 },
+  { name: "Las Vegas, NV", lat: 36.1699, lng: -115.1398 },
+];
 
 export default function FranchisePage() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -44,7 +69,34 @@ export default function FranchisePage() {
                 </button>
               </div>
             </div>
-            <div className="w-full lg:w-[380px] shrink-0 hidden lg:block" />
+            <div className="w-full lg:w-[480px] shrink-0 hidden lg:flex items-center justify-center">
+              <div className="w-full h-[380px] rounded-2xl overflow-hidden shadow-2xl border-2 border-white/20 [&_.leaflet-control-attribution]:hidden">
+                <MapContainer
+                  center={[39.5, -98.35]}
+                  zoom={3}
+                  scrollWheelZoom={false}
+                  style={{ height: "100%", width: "100%" }}
+                  zoomControl={true}
+                >
+                  <TileLayer
+                    url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
+                    attribution=''
+                  />
+                  {FRANCHISE_LOCATIONS.map((loc) => (
+                    <CircleMarker
+                      key={loc.name}
+                      center={[loc.lat, loc.lng]}
+                      radius={7}
+                      pathOptions={{ color: "#ffffff", fillColor: "#005981", fillOpacity: 1, weight: 2 }}
+                    >
+                      <Tooltip direction="top" offset={[0, -8]} opacity={1}>
+                        <span className="text-xs font-semibold">{loc.name}</span>
+                      </Tooltip>
+                    </CircleMarker>
+                  ))}
+                </MapContainer>
+              </div>
+            </div>
           </div>
         </div>
       </section>

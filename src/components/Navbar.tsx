@@ -76,6 +76,7 @@ export default function Navbar() {
             <div className="hidden md:flex items-center space-x-6">
               {[
                 { to: "/learn", label: "Training Platform" },
+                { to: "/license", label: "License Platform" },
                 { to: "/franchise", label: "Franchise Opportunities" },
                 { to: "/articles", label: "Articles" },
               ].map(({ to, label }) => (
@@ -173,6 +174,7 @@ export default function Navbar() {
             <div className="px-4 py-4 space-y-3">
               {[
                 { to: "/learn", label: "Training Platform" },
+                { to: "/license", label: "License Platform" },
                 { to: "/franchise", label: "Franchise Opportunities" },
                 { to: "/articles", label: "Articles" },
               ].map(({ to, label }) => (
