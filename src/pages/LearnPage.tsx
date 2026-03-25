@@ -333,9 +333,9 @@ export default function LearnPage() {
             {category.video ? (
               <>
                 {/* Step 1 — Video */}
-                <section id={sectionIds.video} className="scroll-mt-36 !mt-4">
+                <section id={sectionIds.video} className="scroll-mt-44 !mt-4">
                   <StepLabel index={1} label="Learn via Video" done={stepsCompleted.video} active={activeStep === "video"} />
-                  <div className="flex flex-col xl:flex-row gap-4 mt-4 items-stretch xl:h-[550px]" style={{ minHeight: "400px" }}>
+                  <div className="flex flex-col xl:flex-row gap-4 mt-4 items-stretch xl:h-[450px]" style={{ minHeight: "400px" }}>
                     <div className="flex-1 min-w-0 flex flex-col">
                       <div className="flex-1 min-h-0">
                         <VideoPlayer
@@ -366,7 +366,7 @@ export default function LearnPage() {
 
                 {/* Step 2 — Practice + AI Feedback */}
                 {category.apiImages && category.apiImages.length > 0 && (
-                  <section id={sectionIds.practice} className="scroll-mt-36">
+                  <section id={sectionIds.practice} className="scroll-mt-52">
                     <StepLabel index={2} label="Practice Inspection with AI" done={stepsCompleted.practice} active={activeStep === "practice"} />
                     <div className="my-6">
                       <ImageBatchViewer images={category.apiImages} onComplete={handlePracticeComplete} />
