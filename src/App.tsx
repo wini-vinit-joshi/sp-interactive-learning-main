@@ -8,6 +8,7 @@ import FranchisePage from "@/pages/FranchisePage";
 import ArticlesPage from "@/pages/ArticlesPage";
 import ArticleDetail from "@/pages/ArticleDetail";
 import LicensePage from "@/pages/LicensePage";
+import DailyChallengePage from "./pages/DailyChallengePage";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -83,6 +84,7 @@ export default function App() {
             <Route path="/franchise" element={<FranchisePage />} />
             <Route path="/articles" element={<ArticlesPage />} />
             <Route path="/articles/:slug" element={<ArticleDetail />} />
+            <Route path="/daily-challenge" element={<DailyChallengePage />} />
           </Routes>
         </main>
         <Footer />
