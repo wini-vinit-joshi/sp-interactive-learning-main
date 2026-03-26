@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, UserCircle, LogOut } from "lucide-react";
+import { Menu, X, UserCircle, LogOut, Flame } from "lucide-react";
 import ConsultationModal from "./ConsultationModal";
 import AuthModal from "./AuthModal";
 import { useAuth } from "@/context/AuthContext";
@@ -71,17 +71,16 @@ export default function Navbar() {
             </Link>
 
             {/* Desktop Nav */}
-            <div className="hidden md:flex items-center space-x-6">
+            <div className="hidden md:flex items-center space-x-4 lg:space-x-6">
               {[
                 { to: "/learn", label: "Training Platform" },
-                { to: "/license", label: "License Requirements" },
                 { to: "/franchise", label: "Franchise Opportunities" },
                 { to: "/articles", label: "Articles" },
               ].map(({ to, label }) => (
                 <Link
                   key={to}
                   to={to}
-                  className={`transition-colors ${
+                  className={`transition-colors whitespace-nowrap ${
                     isWhite
                       ? "text-gray-700 hover:text-[#005981]"
                       : "text-white/90 hover:text-white"
@@ -94,7 +93,7 @@ export default function Navbar() {
             </div>
 
             {/* Desktop Actions */}
-            <div className="hidden md:flex items-center space-x-3">
+            <div className="hidden md:flex items-center space-x-2 lg:space-x-3 shrink-0">
               {user ? (
                 <div className="relative" ref={dropdownRef}>
                   <button
@@ -124,7 +123,7 @@ export default function Navbar() {
               ) : (
                 <button
                   onClick={() => setAuthOpen(true)}
-                  className={`text-sm font-medium flex items-center gap-1.5 transition-colors ${
+                  className={`text-sm font-medium flex items-center gap-1.5 transition-colors whitespace-nowrap ${
                     isWhite ? "text-gray-700 hover:text-[#005981]" : "text-white/90 hover:text-white"
                   }`}
                 >
@@ -134,7 +133,7 @@ export default function Navbar() {
               )}
               <button
                 onClick={() => setModalOpen(true)}
-                className={`inline-flex h-9 items-center justify-center rounded-md px-4 py-2 text-sm font-semibold border transition-colors ${
+                className={`inline-flex h-9 items-center justify-center rounded-md px-3 lg:px-4 py-2 text-sm font-semibold border transition-colors whitespace-nowrap ${
                   isWhite
                     ? "border-[#005981] text-[#005981] hover:bg-[#005981] hover:text-white"
                     : "border-white text-white hover:bg-white hover:text-[#005981]"
@@ -146,7 +145,7 @@ export default function Navbar() {
                 href="https://winfranchising.com/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`inline-flex h-9 items-center justify-center rounded-md px-4 py-2 text-sm font-semibold shadow transition-colors ${
+                className={`inline-flex h-9 items-center justify-center rounded-md px-3 lg:px-4 py-2 text-sm font-semibold shadow transition-colors whitespace-nowrap ${
                   isWhite
                     ? "bg-[#005981] text-white hover:bg-[#004a6e]"
                     : "bg-white text-[#005981] hover:bg-white/90"
@@ -154,15 +153,44 @@ export default function Navbar() {
               >
                 Own a Franchise
               </a>
+              <Link
+                to="/daily-challenge"
+                className={`flex items-center gap-1.5 px-2.5 lg:px-3 py-1.5 rounded-full border transition-colors ml-1 lg:ml-3 shrink-0 whitespace-nowrap ${
+                  isWhite
+                    ? "bg-orange-50 border-orange-200 text-orange-600 hover:bg-orange-100"
+                    : "bg-white/10 border-white/20 text-white hover:bg-white/20"
+                }`}
+                title="Daily Challenge"
+              >
+                <Flame className={`w-4 h-4 shrink-0 ${isWhite ? "text-orange-500" : "text-orange-400"}`} />
+                <span className="text-sm font-bold flex items-center">
+                  5 <span className="text-[10px] uppercase tracking-wider ml-1.5 opacity-80 pl-1.5 border-l border-current font-bold hidden xl:inline-block">Daily Challenge</span>
+                </span>
+              </Link>
             </div>
 
             {/* Mobile menu button */}
-            <button
-              className={`md:hidden transition-colors ${isWhite ? "text-gray-700" : "text-white"}`}
-              onClick={() => setMenuOpen(!menuOpen)}
-            >
-              {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
+            <div className="md:hidden flex items-center gap-4">
+              <Link
+                to="/daily-challenge"
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full border transition-colors ${
+                  isWhite
+                    ? "bg-orange-50 border-orange-200 text-orange-600 hover:bg-orange-100"
+                    : "bg-white/10 border-white/20 text-white hover:bg-white/20"
+                }`}
+              >
+                <Flame className={`w-4 h-4 ${isWhite ? "text-orange-500" : "text-orange-400"}`} />
+                <span className="text-sm font-bold flex items-center">
+                  5 <span className="text-[10px] uppercase tracking-wider ml-1.5 opacity-80 pl-1.5 border-l border-current font-bold hidden sm:inline-block">Daily Challenge</span>
+                </span>
+              </Link>
+              <button
+                className={`transition-colors ${isWhite ? "text-gray-700" : "text-white"}`}
+                onClick={() => setMenuOpen(!menuOpen)}
+              >
+                {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              </button>
+            </div>
           </div>
         </div>
 
@@ -172,7 +200,6 @@ export default function Navbar() {
             <div className="px-4 py-4 space-y-3">
               {[
                 { to: "/learn", label: "Training Platform" },
-                { to: "/license", label: "License Requirements" },
                 { to: "/franchise", label: "Franchise Opportunities" },
                 { to: "/articles", label: "Articles" },
               ].map(({ to, label }) => (
